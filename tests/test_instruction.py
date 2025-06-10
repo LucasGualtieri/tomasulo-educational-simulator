@@ -60,10 +60,13 @@ class TestInstruction(unittest.TestCase):
     def test_string_representation(self):
         instr = Instruction("ADD", rd="R1", r1="R2", r2="R3", id=0)
         output = str(instr)
-        self.assertIn("Instrução 0", output)
+        
+        self.assertIn("Instr ID: 0", output)
+        self.assertIn("ADD R1, R2, R3", output)
         self.assertIn("Opcode: ADD", output)
         self.assertIn("Dest: R1", output)
         self.assertIn("Src: R2, R3", output)
+        self.assertIn("Stages: Issue:", output)
 
 if __name__ == "__main__":
     unittest.main()
