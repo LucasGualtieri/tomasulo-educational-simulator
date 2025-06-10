@@ -30,5 +30,29 @@ class TestReservationStation(unittest.TestCase):
         self.assertIn('ReservationStation', s)
         self.assertIn('Load', s)
 
+    def test_update_with_cdb(self):
+        rs = ReservationStation('Add', 2)
+        entry = rs.get_free()
+        entry.busy = True
+        entry.op = 'ADD'
+        entry.Qj = 'ROB5'
+        entry.Qk = 'ROB6'
+        # Antes do CDB
+        self.assertIsNone(entry.Vj)
+        self.assertIsNone(entry.Vk)
+        # Atualiza Qj
+        updated = rs.update_with_cdb('ROB5', 42)
+        self.assertTrue(updated)
+        self.assertEqual(entry.Vj, 42)
+        self.assertIsNone(entry.Qj)
+        # Atualiza Qk
+        updated = rs.update_with_cdb('ROB6', 99)
+        self.assertTrue(updated)
+        self.assertEqual(entry.Vk, 99)
+        self.assertIsNone(entry.Qk)
+        # Não deve atualizar nada se tag não existe
+        updated = rs.update_with_cdb('ROB7', 123)
+        self.assertFalse(updated)
+
 if __name__ == "__main__":
     unittest.main()
