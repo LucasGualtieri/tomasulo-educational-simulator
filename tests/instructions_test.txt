@@ -1,0 +1,6 @@
+ADD R1, R2, R3
+ADDI R4, R5, 10
+BEQ R1, R2, 8
+LW R6, 4(R7)
+SW R8, 12(R9)
+NOP
