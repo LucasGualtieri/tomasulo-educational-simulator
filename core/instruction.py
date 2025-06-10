@@ -105,40 +105,25 @@ class Instruction:
         return self.opcode in {'ADD', 'SUB', 'MUL', 'DIV', 'ADDI', 'AND', 'OR'}
 
     def __str__(self):
-        width = 58
-        linha_horizontal = '─' * width
-        instr_id = f"Instrução {self.id if self.id is not None else '-'}"
-        padding = width - len(instr_id) - 2  # 2 for the spaces around the title
-        header = f"┌─ {instr_id} {'─' * padding}┐"
 
-        raw_line = f"│ Raw: {self.raw:<{width - 7}}│"  # 7 = len("│ Raw: ") + 1
+        def format_val(val):
+            return str(val) if val is not None else "-"
 
-        info_line_1 = f"│ Opcode: {self.opcode:<8} │ Type: {self.type:<4} │ Latency: {self.get_latency():<2} │"
-        srcs = ', '.join(r for r in self.src_registers if r)
-        info_line_2 = f"│ Dest: {self.dest_register or '-':<5} │ Src: {srcs or '-':<25}│"
-
-        stage_line = (
-            f"│ Estágios: issue:{self.stage['issue'] or '-':<2} | "
-            f"execute_start:{self.stage['execute_start'] or '-':<2} | "
-            f"execute_end:{self.stage['execute_end'] or '-':<2} | "
-            f"writeback:{self.stage['writeback'] or '-':<2} | "
-            f"commit:{self.stage['commit'] or '-':<2} │"
-        )
-
-        meta_line = (
-            f"│ Tag: {str(self.tag) if self.tag else '-':<5} │ "
-            f"ROB: {str(self.rob_entry) if self.rob_entry else '-':<5} │ "
-            f"Branch: {'Sim' if self.branch else 'Não':<3} │"
-        )
-
-        return '\n'.join([
-            header,
-            raw_line,
-            f"├{linha_horizontal}┤",
-            info_line_1,
-            info_line_2,
-            f"├{linha_horizontal}┤",
-            stage_line,
-            meta_line,
-            f"└{linha_horizontal}┘"
+        stage_str = " | ".join([
+            f"Issue: {format_val(self.stage['issue'])}",
+            f"Exec: {format_val(self.stage['execute_start'])}-{format_val(self.stage['execute_end'])}",
+            f"WB: {format_val(self.stage['writeback'])}",
+            f"Commit: {format_val(self.stage['commit'])}"
         ])
+
+        info = [
+            f"[Instr ID: {format_val(self.id)}] {self.raw}",
+            f"Type: {self.type:<4} | Opcode: {self.opcode:<5} | Latency: {self.get_latency()}",
+            f"Dest: {format_val(self.dest_register):<4} | Src: {', '.join(r for r in self.src_registers if r) or '-'}",
+            f"Tag: {format_val(self.tag):<5} | ROB: {format_val(self.rob_entry):<8} | Branch: {'Yes' if self.branch else 'No'}",
+            f"Stages: {stage_str}",
+            "-" * 60  # separador
+        ]
+
+        return "\n".join(info)
+
