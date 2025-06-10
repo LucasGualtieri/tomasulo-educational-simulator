@@ -1,0 +1,11 @@
+# Interface gráfica (GUI)
+PyQt5==5.15.9
+
+# Estruturas de dados e manipulação (opcional, mas útil)
+numpy==1.26.4
+
+# Visualização opcional (plots de métricas, se desejarem)
+matplotlib==3.8.4
+
+# Desenvolvimento e testes (opcional)
+pytest==8.2.1
