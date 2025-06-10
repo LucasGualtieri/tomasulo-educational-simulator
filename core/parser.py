@@ -1,8 +1,8 @@
 import re
 
-from instruction import Instruction
+from core.instruction import Instruction
 
-def parse_instruction(raw_text: str) -> Instruction:
+def parse_instruction(raw_text: str, id:int = 1) -> Instruction:
     raw_text = raw_text.strip()
     if not raw_text:
         raise ValueError("Empty instruction")
@@ -67,16 +67,18 @@ def parse_instruction(raw_text: str) -> Instruction:
     else:
         raise ValueError("Unsupported opcode: " + opcode)
 
-    return Instruction(opcode, rd=rd, r1=r1, r2=r2, imediato=imediato, raw_text=raw_text)
+    return Instruction(opcode, rd=rd, r1=r1, r2=r2, imediato=imediato, raw_text=raw_text, id=id)
 
 def parse(file_path: str) -> list:
     instructions = []
+    id = 0
     with open(file_path, 'r') as f:
         for line in f:
             line = line.strip()
             if line:  # ignora linhas vazias
                 try:
-                    instr = parse_instruction(line)
+                    instr = parse_instruction(line, id)
+                    id += 1
                     instructions.append(instr)
                 except Exception as e:
                     print(f"Erro ao parsear a linha '{line}': {e}")
