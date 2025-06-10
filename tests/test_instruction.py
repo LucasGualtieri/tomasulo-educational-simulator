@@ -58,6 +58,7 @@ class TestInstruction(unittest.TestCase):
         self.assertFalse(instr.is_branch())
 
     def test_string_representation(self):
+
         instr = Instruction("ADD", rd="R1", r1="R2", r2="R3", id=0)
         output = str(instr)
         
