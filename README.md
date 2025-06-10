@@ -48,7 +48,7 @@ tomasulo-educational-simulator/
 ├── utils/                  # Funções auxiliares e métricas
 │   └── metrics.py
 ├── examples/               # Exemplos de instruções MIPS para testes
-│   └── bubble-sort.mips
+│   └── selection-sort.mips
 ├── tests/                  # Testes unitários e de integração
 │   └── ...
 ├── main.py                 # Ponto de entrada do simulador
