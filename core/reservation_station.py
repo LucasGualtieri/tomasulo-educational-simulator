@@ -44,6 +44,24 @@ class ReservationStation:
                 return entry
         return None
 
+    def update_with_cdb(self, tag, value):
+        """
+        Atualiza todos os operandos aguardando o valor identificado por 'tag'.
+        Se Qj ou Qk for igual ao tag, coloca o valor em Vj/Vk e limpa o Qj/Qk.
+        """
+        updated = False
+        for entry in self.entries:
+            if entry.busy:
+                if entry.Qj == tag:
+                    entry.Vj = value
+                    entry.Qj = None
+                    updated = True
+                if entry.Qk == tag:
+                    entry.Vk = value
+                    entry.Qk = None
+                    updated = True
+        return updated
+
     def __iter__(self):
         return iter(self.entries)
 
