@@ -19,8 +19,8 @@ Simulador interativo e visual do algoritmo de Tomasulo, com foco didático. Supo
 ### 1. Clonar o repositório
 
 ```bash
-git clone https://github.com/usuario/tomasulo-visual-sim.git
-cd tomasulo-visual-sim
+git clone https://github.com/usuario/tomasulo-educational-simulator.git
+cd tomasulo-educational-simulator
 ```
 
 ### 2. Instalar dependências (ex: Python + PyQt5)
